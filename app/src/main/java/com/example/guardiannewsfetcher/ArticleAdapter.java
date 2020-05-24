@@ -35,12 +35,13 @@ public class ArticleAdapter extends ArrayAdapter<Article> {
         Article currentArticle = getItem(position);
         final String articleTitle = currentArticle.getArticleTitle();
         final String sectionName = currentArticle.getSectionName();
+        final String articleUrl = currentArticle.getArticleUrl();
 
         LinearLayout articleListItem_layout = (LinearLayout) listItemView.findViewById(R.id.article_list_item_tv);
         articleListItem_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openNewActivity();
+                openNewActivity(articleUrl);
             }
         });
 
@@ -53,8 +54,8 @@ public class ArticleAdapter extends ArrayAdapter<Article> {
         return listItemView;
     }
 
-    public void openNewActivity () {
-        String url = "http://www.byton.com";
+    public void openNewActivity (String articleUrl) {
+        String url = articleUrl;
         Intent i = new Intent(Intent.ACTION_VIEW);
         i.setData(Uri.parse(url));
         context.startActivity(i);
