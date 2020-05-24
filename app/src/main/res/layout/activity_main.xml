@@ -13,11 +13,18 @@
         android:orientation="horizontal">
             <EditText
                 android:layout_width="300dp"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:id="@+id/search_et"
+                android:hint="Search for articles by keyword..."
+                android:maxLines="1"
+                android:inputType="text"
+                android:imeOptions="actionDone"
+                >
             </EditText>
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/search_submit"
                 android:text="Search"
                 >
             </Button>
