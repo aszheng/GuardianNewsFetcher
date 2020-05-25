@@ -35,6 +35,7 @@ public class ArticleAdapter extends ArrayAdapter<Article> {
         Article currentArticle = getItem(position);
         final String articleTitle = currentArticle.getArticleTitle();
         final String sectionName = currentArticle.getSectionName();
+        final String articleDate = currentArticle.getArticleDate();
         final String articleUrl = currentArticle.getArticleUrl();
 
         LinearLayout articleListItem_layout = (LinearLayout) listItemView.findViewById(R.id.article_list_item_tv);
@@ -50,6 +51,9 @@ public class ArticleAdapter extends ArrayAdapter<Article> {
 
         TextView artistName_tv = (TextView) listItemView.findViewById(R.id.article_section_tv);
         artistName_tv.setText(sectionName);
+
+        TextView articleDate_tv = (TextView) listItemView.findViewById(R.id.article_date_tv);
+        articleDate_tv.setText(articleDate);
 
         return listItemView;
     }

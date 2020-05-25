@@ -1,6 +1,10 @@
 package com.example.guardiannewsfetcher;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.Loader;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -11,13 +15,14 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks <List<Article>> {
 
     EditText mSearchEditText;
     Button mSubmit;
     String searchString;
-
+    ArticleAdapter articleAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     searchString = mSearchEditText.getText().toString();
-                    Log.d("HELLO WORLD", searchString);
                     Toast.makeText(MainActivity.this, searchString, Toast.LENGTH_LONG).show();
                 }
 
@@ -40,23 +44,30 @@ public class MainActivity extends AppCompatActivity {
 
         );
 
-        ArrayList<Article> articles = new ArrayList<Article>();
 
-        articles.add(new Article("Article 1", "Business", "http://www.espn.com"));
-        articles.add(new Article("Article 2", "Sports", "http://www.espn.com"));
-        articles.add(new Article("Article 3", "Finance", "http://www.espn.com"));
-        articles.add(new Article("Article 4", "Lifestyle", "http://www.espn.com"));
-        articles.add(new Article("Article 5", "Lifestyle", "http://www.espn.com"));
-        articles.add(new Article("Article 6", "Lifestyle", "http://www.espn.com"));
-        articles.add(new Article("Article 7", "Lifestyle", "http://www.espn.com"));
-        articles.add(new Article("Article 8", "Lifestyle", "http://www.espn.com"));
-
-        ArticleAdapter articleAdapter = new ArticleAdapter(this, articles);
+        articleAdapter = new ArticleAdapter(this, new ArrayList<Article>());
 
         ListView listView = (ListView) findViewById(R.id.listview_main);
         listView.setAdapter(articleAdapter);
+
+        LoaderManager loaderManager = getSupportLoaderManager();
+        loaderManager.initLoader(1, null, this);
     }
 
 
+    @Override
+    public Loader onCreateLoader(int id, Bundle args) {
+        return new ArticleLoader(this, searchString);
+    }
 
+    @Override
+    public void onLoadFinished(Loader<List<Article>> loader, List<Article> articles) {
+        articleAdapter.clear();
+        articleAdapter.addAll(articles);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<List<Article>> loader) {
+        articleAdapter.clear();
+    }
 }
