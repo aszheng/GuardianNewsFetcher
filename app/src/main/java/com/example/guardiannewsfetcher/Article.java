@@ -10,7 +10,8 @@ public class Article {
     public Article (String vArticleTitle, String vSectionName, String vArticleDate, String vArticleUrl) {
         mArticleTitle = vArticleTitle;
         mSectionName = vSectionName;
-        mArticleDate = vArticleDate;
+        String[] dateArrStr = vArticleDate.split("T", 2);
+        mArticleDate = dateArrStr[0];
         mArticleUrl = vArticleUrl;
     }
 

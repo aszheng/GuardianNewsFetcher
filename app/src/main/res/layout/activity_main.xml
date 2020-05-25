@@ -4,39 +4,76 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="16dp"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/search_bar"
+        android:weightSum="4"
         android:orientation="horizontal">
             <EditText
-                android:layout_width="300dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="3"
                 android:id="@+id/search_et"
-                android:hint="Search for articles by keyword..."
+                android:hint="Search by keyword..."
                 android:maxLines="1"
                 android:inputType="text"
                 android:imeOptions="actionDone"
                 >
             </EditText>
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:id="@+id/search_submit"
                 android:text="Search"
+                android:background="@color/colorAccent"
+                android:textColor="@android:color/white"
                 >
             </Button>
     </LinearLayout>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Top News"
+        android:id="@+id/result_title"
+        android:textStyle="bold"
+        android:textSize="30sp"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintTop_toBottomOf="@+id/search_bar"
+        >
+    </TextView>
 
     <ListView
         android:id="@+id/listview_main"
-        android:layout_width="411dp"
-        android:layout_height="673dp"
-        app:layout_constraintTop_toBottomOf="@+id/search_bar">
+        android:paddingTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/result_title">
     </ListView>
+
+    <TextView
+        android:id="@+id/tv_error_message_display"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/result_title"
+        android:textSize="20sp" />
+
+    <ProgressBar
+        android:id="@+id/loading_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

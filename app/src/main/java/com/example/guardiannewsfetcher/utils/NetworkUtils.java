@@ -15,15 +15,20 @@ public class NetworkUtils {
     private static final String TAG = NetworkUtils.class.getSimpleName();
 
     private static final String BASE_URL = "https://content.guardianapis.com/search";
-//    private static final String API_KEY = BuildConfig.API_KEY;
     private static final String API_KEY = "test";
+    private static String query;
 
     //URI builder
-    public static URL buildUrl(String searchType) {
+    public static URL buildUrl(String queryStr) {
+        if (queryStr != null && !queryStr.isEmpty()) {
+            query = queryStr;
+        } else {
+            query = null; //API supports null query as default response
+        }
 
         Uri builtUri = Uri.parse(BASE_URL).buildUpon()
-                .appendQueryParameter("q", "debates")
                 .appendQueryParameter("api-key", API_KEY)
+                .appendQueryParameter("q", query)
                 .build();
 
         URL url = null;
@@ -36,7 +41,6 @@ public class NetworkUtils {
         Log.d(TAG, "Url to call: " + url);
         return url;
     }
-
 
     //boilerplate code for HTTP call
     public static String getResponseFromHttpUrl(URL url) throws IOException {
