@@ -33,6 +33,7 @@ public class ArticleAdapter extends ArrayAdapter<Article> {
         Article currentArticle = getItem(position);
         final String articleTitle = currentArticle.getArticleTitle();
         final String sectionName = currentArticle.getSectionName();
+        final String articleAuthor = currentArticle.getArticleAuthor();
         final String articleDate = currentArticle.getArticleDate();
         final String articleUrl = currentArticle.getArticleUrl();
 
@@ -44,11 +45,14 @@ public class ArticleAdapter extends ArrayAdapter<Article> {
             }
         });
 
-        TextView songTitle_tv = (TextView) listItemView.findViewById(R.id.article_title_tv);
-        songTitle_tv.setText(articleTitle);
+        TextView articleTitle_tv = (TextView) listItemView.findViewById(R.id.article_title_tv);
+        articleTitle_tv.setText(articleTitle);
 
-        TextView artistName_tv = (TextView) listItemView.findViewById(R.id.article_section_tv);
-        artistName_tv.setText(sectionName);
+        TextView articleSection_tv = (TextView) listItemView.findViewById(R.id.article_section_tv);
+        articleSection_tv.setText(sectionName);
+
+        TextView articleAuthor_tv = (TextView) listItemView.findViewById(R.id.article_author_tv);
+        articleAuthor_tv.setText(articleAuthor);
 
         TextView articleDate_tv = (TextView) listItemView.findViewById(R.id.article_date_tv);
         articleDate_tv.setText(articleDate);

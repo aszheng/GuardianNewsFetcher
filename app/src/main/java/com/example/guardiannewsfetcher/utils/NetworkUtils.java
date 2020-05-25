@@ -16,6 +16,7 @@ public class NetworkUtils {
 
     private static final String BASE_URL = "https://content.guardianapis.com/search";
     private static final String API_KEY = "test";
+    private static final String CONTRIBUTOR_TAG = "contributor";
     private static String query;
 
     //URI builder
@@ -29,6 +30,7 @@ public class NetworkUtils {
         Uri builtUri = Uri.parse(BASE_URL).buildUpon()
                 .appendQueryParameter("api-key", API_KEY)
                 .appendQueryParameter("q", query)
+                .appendQueryParameter("show-tags", CONTRIBUTOR_TAG)
                 .build();
 
         URL url = null;
