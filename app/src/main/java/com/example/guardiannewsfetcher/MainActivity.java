@@ -16,7 +16,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -51,10 +50,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         articleAdapter = new ArticleAdapter(this, new ArrayList<Article>());
         mListView.setAdapter(articleAdapter);
 
-        ConnectivityManager connMgr = (ConnectivityManager)
-                getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-
         //Hides IME and click submit upon hitting "done"
         mSearchEditText.setOnEditorActionListener(new EditText.OnEditorActionListener() {
             @Override
@@ -87,23 +82,21 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                             //restart loader
                             LoaderManager.getInstance(MainActivity.this)
                                     .restartLoader(1, null, MainActivity.this);
-
                         } else {
                             mLoadingIndicator.setVisibility(View.GONE);
-                            mErrorMessageDisplay.setText("NO CONNECTION");
+                            mErrorMessageDisplay.setText("No Connection...");
                         }
                     }
                 }
         );
 
-        // if connected, fetch data with loaders
+        // Generic API search with no query - on activity onCreate and if connected
         if (isConnected()) {
             LoaderManager loaderManager = getSupportLoaderManager();
             loaderManager.initLoader(1, null, MainActivity.this);
-            //else display error message
         } else {
             mLoadingIndicator.setVisibility(View.GONE);
-            mErrorMessageDisplay.setText("NO CONNECTION");
+            mErrorMessageDisplay.setText("No Connection...");
         }
     }
 
@@ -136,7 +129,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         }
 
         articleAdapter.clear();
-        articleAdapter.addAll(articles);
+
+        //Check to see if loader returns null or empty ArrayList
+        if (articles != null && articles.size() > 0) {
+            articleAdapter.addAll(articles);
+        } else {
+            mErrorMessageDisplay.setText("No Data to Display...");
+        }
     }
 
     @Override
